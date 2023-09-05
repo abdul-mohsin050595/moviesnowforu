@@ -1,6 +1,6 @@
 const Search = ({ mediaType, value, searchHandler }) => {
   return (
-    <div className="m-4 h-auto">
+    <div className="m-4">
       <input
         className="form-control form-control-lg text-white bg-dark"
         type="text"

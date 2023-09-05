@@ -61,7 +61,7 @@ const MediaSearch = () => {
     cursor: "pointer",
   };
   return (
-    <div className="mt-5">
+    <div className="mt-5 pt-5 vh-100">
       <div className="p-2 d-flex justify-content-center align-item-center">
         <Button
           onClick={() => setMediaType("movie")}

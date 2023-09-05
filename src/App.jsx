@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import routes from "./routes/routes";
 import { Suspense } from "react";
 import GlobalLoading from "./components/Loading/GlobalLoading";
+import Footer from "./components/Footer";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           })}
         </Routes>
       </Suspense>
+      <Footer />
     </Router>
   );
 }
