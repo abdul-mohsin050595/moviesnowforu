@@ -16,6 +16,7 @@ function FeaturedBanner({ mediaType, mediaCategory }) {
     return <h1>{error}</h1>;
   }
 
+  console.log(data)
   return (
     <div className="mobileCard">
       {loading && <GlobalLoading />}

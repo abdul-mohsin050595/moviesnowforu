@@ -1,9 +1,14 @@
-import { useParams } from "react-router-dom";
+import MovieDetail from "../components/MovieDetail";
 import Trailer from "../components/Trailer";
+import React, { Suspense } from "react";
+
 const MediaDetail = () => {
   return (
     <>
-      <Trailer />
+      <Suspense fallback="loading....">
+        <MovieDetail />
+        <Trailer />
+      </Suspense>
     </>
   );
 };

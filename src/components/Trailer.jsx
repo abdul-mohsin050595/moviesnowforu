@@ -28,8 +28,11 @@ const Trailer = () => {
       (result) => result.name === "Official Trailer"
     );
 
+    if (trailer) {
+      setLoading(false);
+      setTrailerId(trailer.key);
+    }
     setLoading(false);
-    setTrailerId(trailer.key);
   };
 
   useEffect(() => {
@@ -51,7 +54,7 @@ const Trailer = () => {
           TRAILER
         </div>
         <div style={tarilerStyle}>
-          {trailerId !== "undefined" && (
+          {trailerId && (
             <div className="ratio ratio-16x9">
               <iframe
                 src={configs.youtubePath(trailerId)}
