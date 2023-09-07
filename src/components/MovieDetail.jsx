@@ -4,7 +4,8 @@ import { useParams } from "react-router-dom";
 import configs from "../config/config";
 import GlobalLoading from "./Loading/GlobalLoading";
 import { Image } from "react-bootstrap";
-import api from "../utils/api";
+
+const ACCESS_TOKEN = import.meta.env.VITE_REACT_ACCESS_TOKEN;
 
 function MovieDetail() {
   const { mediaType, mediaId } = useParams();
@@ -13,9 +14,15 @@ function MovieDetail() {
 
   const getDetail = async () => {
     setLoading(true);
-
-    const res = await api.get(
-      `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`
+    const config = {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    };
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`,
+      config
     );
 
     const result = await res.data;

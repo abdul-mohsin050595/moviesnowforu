@@ -14,20 +14,20 @@ const Trailer = () => {
 
   const getMedia = async () => {
     setLoading(true);
-    // const config = {
-    //   headers: {
-    //     accept: "application/json",
-    //     Authorization: `Bearer ${ACCESS_TOKEN}`,
-    //   },
-    // };
-    // const res = await axios.get(
-    //   `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`,
-    //   config
-    // );
-    const res = await api.get(
-      `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`
+    const config = {
+      headers: {
+        accept: "application/json",
+        Authorization: `Bearer ${ACCESS_TOKEN}`,
+      },
+    };
+    const res = await axios.get(
+      `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`,
+      config
     );
-    console.log(res);
+    // const res = await api.get(
+    //   `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`
+    // );
+    // console.log(res);
     const { results } = await res.data;
     const trailer = results.find(
       (result) => result.name === "Official Trailer"
