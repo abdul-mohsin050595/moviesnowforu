@@ -15,7 +15,7 @@ const PaginationComp = ({ page, setPage, pageCount }) => {
 
     for (
       let number = page;
-      number <= pageCount && number <= page + 4;
+      number <= pageCount && number <= page + 2;
       number++
     ) {
       items.push(createPaginationItem(number));
@@ -45,8 +45,8 @@ const PaginationComp = ({ page, setPage, pageCount }) => {
     await setPage((page) => page + 1);
   };
   return (
-    <div className="d-flex justify-content-center align-item-center mt-2 mb-2">
-      <Pagination size="sm">
+    <div className="d-flex justify-content-center align-item-center mt-2 mb-2 p-4">
+      <Pagination size="md">
         <Pagination.Prev disabled={page === 1} onClick={() => prevPage()} />
         {...paginationItems()}
 
