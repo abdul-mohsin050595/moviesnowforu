@@ -1,8 +1,8 @@
 import Container from "react-bootstrap/Container";
 import useFetch from "../hooks/useFetch";
 import MediaItems from "./MediaItems";
-import { Suspense } from "react";
 import ComponentLoading from "./Loading/ComponentLoading";
+import Error from "./Error";
 
 const MediaContainer = ({ header, mediaCategory, mediaType }) => {
   const { loading, data, error } = useFetch(`${mediaType}/${mediaCategory}`);
@@ -10,7 +10,7 @@ const MediaContainer = ({ header, mediaCategory, mediaType }) => {
   return (
     <>
       {loading && <ComponentLoading />}
-      {error && <span className="text-danger fs-4"></span>}
+      {error && <Error message={error} />}
       <Container fluid={true} className="mt-5 mb-5">
         <span className="border-info border-bottom fs-3 fw-bold border-3">
           {header}

@@ -57,7 +57,7 @@ const MediaGrid = ({ mediaCategory }) => {
   };
   return (
     <>
-      <Row className="p-2 flex-row">
+      <Row className="p-4 p-sm-2 flex-row">
         {error && <span className="text-danger fs-1">{error}</span>}
         {loading && <GlobalLoading />}
         {media.map((med) => {

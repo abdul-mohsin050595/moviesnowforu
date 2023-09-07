@@ -3,8 +3,8 @@ import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import configs from "../config/config";
 import GlobalLoading from "./Loading/GlobalLoading";
-
-const ACCESS_TOKEN = import.meta.env.VITE_REACT_ACCESS_TOKEN;
+import { Image } from "react-bootstrap";
+import api from "../utils/api";
 
 function MovieDetail() {
   const { mediaType, mediaId } = useParams();
@@ -13,15 +13,9 @@ function MovieDetail() {
 
   const getDetail = async () => {
     setLoading(true);
-    const config = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    };
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`,
-      config
+
+    const res = await api.get(
+      `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`
     );
 
     const result = await res.data;
@@ -42,9 +36,9 @@ function MovieDetail() {
   }
   return (
     <main className="mt-5">
-      <article className=" w-100 h-auto d-sm-flex s-md-flex flex-md-row flex-sm-column">
-        <div className="mediaImage text-sm-center">
-          <img
+      <article className=" w-100 d-sm-flex s-md-flex flex-md-row flex-sm-column">
+        <div className="mediaImage text-sm-center w-md-50">
+          <Image
             src={`${configs.backdropPath(
               movie?.backdrop_path || movie?.poster_path
             )}`}
@@ -58,21 +52,24 @@ function MovieDetail() {
             loading="loading..."
           />
         </div>
-        <div className="mediaDetail p-3 me-5">
+        <div className="mediaDetail p-2 p-md-3 w-md-50">
           <div>
             <h1 className="py-2">
               {movie?.original_title} {movie?.original_name}
             </h1>
           </div>
-          <div className="py-3">
-            <b>Rating {movie?.vote_average}</b>
+          <div className="py-3 d-flex flex-wrap align-items-center">
+            <b className="me-2">Rating {movie?.vote_average}</b>
             {movie?.genres?.map((gen) => (
-              <span key={gen?.id} className="mx-2 bg-info rounded py-1 px-2">
+              <span
+                key={gen?.id}
+                className="m-1 text-black bg-info rounded py-1 px-2"
+              >
                 {gen?.name}
               </span>
             ))}
           </div>
-          <div className="py-3 text-left">
+          <div className="pt-3 text-left">
             <p className="fs-6">{movie?.overview?.slice(0, 360) + "..."}</p>
           </div>
         </div>

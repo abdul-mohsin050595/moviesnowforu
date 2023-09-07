@@ -4,6 +4,7 @@ import axios from "axios";
 import { Container } from "react-bootstrap";
 import configs from "../config/config";
 import GlobalLoading from "./Loading/GlobalLoading";
+import api from "../utils/api";
 
 const ACCESS_TOKEN = import.meta.env.VITE_REACT_ACCESS_TOKEN;
 const Trailer = () => {
@@ -13,16 +14,20 @@ const Trailer = () => {
 
   const getMedia = async () => {
     setLoading(true);
-    const config = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    };
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`,
-      config
+    // const config = {
+    //   headers: {
+    //     accept: "application/json",
+    //     Authorization: `Bearer ${ACCESS_TOKEN}`,
+    //   },
+    // };
+    // const res = await axios.get(
+    //   `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`,
+    //   config
+    // );
+    const res = await api.get(
+      `https://api.themoviedb.org/3/${mediaType}/${mediaId}/videos`
     );
+    console.log(res);
     const { results } = await res.data;
     const trailer = results.find(
       (result) => result.name === "Official Trailer"
@@ -46,10 +51,13 @@ const Trailer = () => {
     padding: "20px 0",
   };
 
+  if (loading) {
+    return <GlobalLoading />;
+  }
   return (
     <>
-      {loading && <GlobalLoading />}
-      <Container className="mt-5">
+      {/* {loading && <GlobalLoading />} */}
+      <Container className="mt-3">
         <div className="mt-2 mb-2 border-info border-3 border-bottom fs-5 fw-bold d-inline">
           TRAILER
         </div>

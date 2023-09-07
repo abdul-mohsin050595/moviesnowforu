@@ -6,20 +6,19 @@ import configs from "../config/config";
 import { Container } from "react-bootstrap";
 import { Suspense } from "react";
 import GlobalLoading from "./Loading/GlobalLoading";
+import Error from "./Error";
 
 function FeaturedBanner({ mediaType, mediaCategory }) {
   const { loading, data, error } = useFetch(`${mediaType}/${mediaCategory}`);
   const navigate = useNavigate();
 
   const randomMovie = data[Math.floor(Math.random() * 20)];
-  if (error) {
-    return <h1>{error}</h1>;
-  }
 
-  console.log(data)
+  console.log(data);
   return (
     <div className="mobileCard">
       {loading && <GlobalLoading />}
+      {error && <Error message={error} />}
       {randomMovie && (
         <Suspense fallback={<GlobalLoading />}>
           <Card className="bg-dark text-white ">
