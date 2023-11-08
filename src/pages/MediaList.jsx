@@ -1,16 +1,56 @@
 import { useParams } from "react-router-dom";
 import FeaturedBanner from "../components/FeaturedBanner";
 import configs from "../config/config";
-import { Suspense, useState } from "react";
-import { Col, Container, Row, Button, Stack } from "react-bootstrap";
+import { useEffect, useState } from "react";
+import { Button } from "react-bootstrap";
 import MediaGrid from "../components/MediaGrid";
+import api from "../utils/api";
+import GlobalLoading from "../components/Loading/GlobalLoading";
+import Error from "../components/Error";
 
+const api_key = import.meta.env.VITE_REACT_API_KEY;
 const MediaList = () => {
   const { mediaType } = useParams();
   const [mediaCategory, setMediaCategory] = useState("popular");
+  const [movies, setMovies] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const randomMovie = movies && movies[Math.floor(Math.random() * 20)];
+
+  console.log(mediaType);
+  useEffect(() => {
+    const fetchMovies = async () => {
+      setLoading(true);
+      try {
+        const res = await api.get(
+          `/${mediaType}/${mediaCategory}?api_key=${api_key}&page=1`
+        );
+        const data = res.data.results;
+
+        if (res.status === 200) {
+          setLoading(false);
+          setMovies(data);
+        }
+      } catch (err) {
+        setLoading(false);
+        console.log(err.name);
+        setError(err.message);
+      }
+    };
+    fetchMovies();
+  }, [mediaCategory, mediaType]);
+
+  if (loading) {
+    return <GlobalLoading />;
+  }
   return (
     <>
-      <FeaturedBanner mediaType={mediaType} mediaCategory={mediaCategory} />
+      {error && !movies && <Error message={error} />}
+      <FeaturedBanner
+        mediaType={mediaType}
+        generatedRandomMovie={randomMovie}
+      />
 
       <div className="d-sm-flex p-2 flex-row text-center justify-content-between align-item-center">
         <div>

@@ -1,7 +1,7 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import apiConfigs from "../config/apiConfigs";
 import Search from "../components/Search";
-import { Button, Row, Spinner } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
 import MediaCard from "../components/MediaCard";
 import { useNavigate } from "react-router-dom";
 import PaginationComp from "../components/PaginationComp";
@@ -17,24 +17,23 @@ const MediaSearch = () => {
   const [page, setPage] = useState("1");
   const navigate = useNavigate();
 
-  const search = async () => {
-    try {
-      setLoading(true);
-      const res = await apiConfigs.searchMedia(mediaType, query, page);
-      const data = res.data;
-      console.log(data);
-      if (res.status === 200) {
-        setLoading(false);
-        setMedia(data.results);
-        setPageCount(data.total_pages);
-      }
-    } catch (error) {
-      setLoading(false);
-      setError(error.message);
-    }
-  };
-
   useEffect(() => {
+    const search = async () => {
+      try {
+        setLoading(true);
+        const res = await apiConfigs.searchMedia(mediaType, query, page);
+        const data = res.data;
+        console.log(data);
+        if (res.status === 200) {
+          setLoading(false);
+          setMedia(data.results);
+          setPageCount(data.total_pages);
+        }
+      } catch (error) {
+        setLoading(false);
+        setError(error.message);
+      }
+    };
     search();
   }, [query, mediaType, page]);
 

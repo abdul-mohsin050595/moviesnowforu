@@ -1,5 +1,4 @@
-import { useMemo } from "react";
-import { Container, Pagination } from "react-bootstrap";
+import { Pagination } from "react-bootstrap";
 
 const PaginationComp = ({ page, setPage, pageCount }) => {
   const createPaginationItem = (i) => {
@@ -44,6 +43,7 @@ const PaginationComp = ({ page, setPage, pageCount }) => {
   const nextPage = async () => {
     await setPage((page) => page + 1);
   };
+
   return (
     <div className="d-flex justify-content-center align-item-center mt-2 mb-2 p-4">
       <Pagination size="md">

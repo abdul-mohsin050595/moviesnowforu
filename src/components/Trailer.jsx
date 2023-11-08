@@ -68,6 +68,7 @@ const Trailer = () => {
                 src={configs.youtubePath(trailerId)}
                 title="youtube trailer"
                 allowFullScreen
+                loading="lazy"
               ></iframe>
             </div>
           )}

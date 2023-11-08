@@ -1,9 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import configs from "../config/config";
 import GlobalLoading from "./Loading/GlobalLoading";
-import { Image } from "react-bootstrap";
 
 const ACCESS_TOKEN = import.meta.env.VITE_REACT_ACCESS_TOKEN;
 
@@ -12,31 +11,30 @@ function MovieDetail() {
   const [movie, setMovie] = useState({});
   const [loading, setLoading] = useState(false);
 
-  const getDetail = async () => {
-    setLoading(true);
-    const config = {
-      headers: {
-        accept: "application/json",
-        Authorization: `Bearer ${ACCESS_TOKEN}`,
-      },
-    };
-    const res = await axios.get(
-      `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`,
-      config
-    );
-
-    const result = await res.data;
-
-    if (res.status === 200) {
-      setLoading(false);
-      setMovie(result);
-    }
-    console.log(result);
-  };
-
   useEffect(() => {
+    const getDetail = async () => {
+      setLoading(true);
+      const config = {
+        headers: {
+          accept: "application/json",
+          Authorization: `Bearer ${ACCESS_TOKEN}`,
+        },
+      };
+      const res = await axios.get(
+        `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`,
+        config
+      );
+
+      const result = await res.data;
+
+      if (res.status === 200) {
+        setLoading(false);
+        setMovie(result);
+      }
+      console.log(result);
+    };
     getDetail();
-  }, []);
+  }, [mediaType, mediaId]);
 
   if (loading) {
     return <GlobalLoading />;
@@ -45,18 +43,20 @@ function MovieDetail() {
     <main className="mt-5">
       <article className=" w-100 d-sm-flex s-md-flex flex-md-row flex-sm-column">
         <div className="mediaImage text-sm-center w-md-50">
-          <Image
+          <img
             src={`${configs.backdropPath(
               movie?.backdrop_path || movie?.poster_path
             )}`}
             alt={movie?.original_title || movie?.name}
             style={{
-              width: "100%",
-              height: "100%",
+              // width: "100%",
+              // height: "100%",
               objectFit: "cover",
               padding: "20px",
             }}
-            loading="loading..."
+            width="100%"
+            height="auto"
+            loading="lazy"
           />
         </div>
         <div className="mediaDetail p-2 p-md-3 w-md-50">

@@ -70,7 +70,7 @@ function NavBar() {
             MoviesNow
           </Link>
         </Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
+        <Navbar.Toggle aria-controls="basic-navbar-nav" size="sm" />
         <Navbar.Collapse
           id="basic-navbar-nav "
           className={`mobileCollapse ${isMobileNavOpen ? "d-block" : "d-none"}`}

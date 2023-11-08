@@ -20,15 +20,15 @@ const MediaCard = ({ media, mediaDetail, cardStyle }) => {
       onMouseEnter={() => setShowOverlay(true)}
       onMouseLeave={() => setShowOverlay(false)}
     >
-      <Card.Img
+      <img
         src={configs.posterPath(media?.poster_path || media?.backdrop_path)}
         alt={media?.title}
         style={{
-          width: "100%",
-          height: "100%",
           objectFit: "cover",
-          objectPosition: "center center",
         }}
+        width="100%"
+        height="100%"
+        loading="lazy"
       />
       <Card.ImgOverlay
         style={cardOverlay}

@@ -4,18 +4,18 @@ import MediaItems from "./MediaItems";
 import ComponentLoading from "./Loading/ComponentLoading";
 import Error from "./Error";
 
-const MediaContainer = ({ header, mediaCategory, mediaType }) => {
-  const { loading, data, error } = useFetch(`${mediaType}/${mediaCategory}`);
+const MediaContainer = ({ header, mediaData, mediaType }) => {
+  // const { loading, data, error } = useFetch(`${mediaType}/${mediaCategory}`);
 
   return (
     <>
-      {loading && <ComponentLoading />}
-      {error && <Error message={error} />}
+      {/* {loading && <ComponentLoading />}
+      {error && <Error message={error} />} */}
       <Container fluid={true} className="mt-5 mb-5">
         <span className="border-info border-bottom fs-3 fw-bold border-3">
           {header}
         </span>
-        <MediaItems mediaData={data} mediaType={mediaType} />
+        <MediaItems mediaData={mediaData} mediaType={mediaType} />
       </Container>
     </>
   );

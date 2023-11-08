@@ -25,10 +25,10 @@ const MediaItems = ({ mediaData, mediaType }) => {
   };
   return (
     <div style={rowStyle}>
-      {mediaData.map((media) => {
+      {mediaData?.map((media) => {
         return (
           <MediaCard
-            key={media.id}
+            key={media?.id}
             media={media}
             mediaDetail={mediaDetail}
             cardStyle={cardStyle}

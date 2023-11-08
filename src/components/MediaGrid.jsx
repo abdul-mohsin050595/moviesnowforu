@@ -1,5 +1,5 @@
+/* eslint-disable react/prop-types */
 import { useNavigate, useParams } from "react-router-dom";
-import useFetch from "../hooks/useFetch";
 import { Row } from "react-bootstrap";
 import MediaCard from "./MediaCard";
 import { useCallback, useEffect, useState, Suspense } from "react";
@@ -23,10 +23,9 @@ const MediaGrid = ({ mediaCategory }) => {
     setLoading(true);
     try {
       const res = await api.get(
-        `${mediaType}/${mediaCategory}/?api_key=${api_key}&page=${page}`
+        `${mediaType}/${mediaCategory}?api_key=${api_key}&page=${page}`
       );
       const data = res.data;
-      console.log(data);
       setLoading(false);
       setMedia(data.results);
       setPageCount(data.total_pages);
@@ -39,7 +38,7 @@ const MediaGrid = ({ mediaCategory }) => {
 
   useEffect(() => {
     getMedia();
-  }, [mediaCategory, mediaType, page]);
+  }, [mediaCategory, mediaType, page, getMedia]);
 
   const mediaDetail = (id) => {
     navigate(`/${mediaType}/${id}`);

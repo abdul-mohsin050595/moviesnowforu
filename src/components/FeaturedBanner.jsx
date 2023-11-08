@@ -1,44 +1,46 @@
 import Button from "react-bootstrap/Button";
-import useFetch from "../hooks/useFetch";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
 import configs from "../config/config";
 import { Container } from "react-bootstrap";
 import { Suspense } from "react";
 import GlobalLoading from "./Loading/GlobalLoading";
-import Error from "./Error";
 
-function FeaturedBanner({ mediaType, mediaCategory }) {
-  const { loading, data, error } = useFetch(`${mediaType}/${mediaCategory}`);
+function FeaturedBanner({ generatedRandomMovie, mediaType }) {
   const navigate = useNavigate();
 
-  const randomMovie = data[Math.floor(Math.random() * 20)];
-
-  console.log(data);
   return (
     <div className="mobileCard">
-      {loading && <GlobalLoading />}
-      {error && <Error message={error} />}
-      {randomMovie && (
+      {generatedRandomMovie && (
         <Suspense fallback={<GlobalLoading />}>
           <Card className="bg-dark text-white ">
             <img
               src={`${configs.backdropPath(
-                randomMovie.backdrop_path || randomMovie.poster_path
+                generatedRandomMovie?.backdrop_path ||
+                  generatedRandomMovie?.poster_path
               )}`}
               className=" mobileBanner"
-              alt={randomMovie.original_title || randomMovie.name}
+              width="100%"
+              heigth="auto"
+              alt={
+                generatedRandomMovie?.original_title ||
+                generatedRandomMovie?.name
+              }
+              loading="lazy"
             />
             <Card.ImgOverlay className="d-flex justify-content-center flex-column imgOverlay w-sm-60">
               <Container>
                 <div className="fs-2 pt-1 pb-1 mobileTitle">
-                  {randomMovie.original_title || randomMovie.name}
+                  {generatedRandomMovie?.original_title ||
+                    generatedRandomMovie?.name}
                 </div>
                 <Card.Text className="fw-bold d-none d-sm-block mobileText">
-                  {randomMovie.overview.slice(0, 143) + "..."}
+                  {generatedRandomMovie?.overview?.slice(0, 143) + "..."}
                 </Card.Text>
                 <Button
-                  onClick={() => navigate(`/${mediaType}/${randomMovie.id}`)}
+                  onClick={() =>
+                    navigate(`/${mediaType}/${generatedRandomMovie?.id}`)
+                  }
                   variant="danger"
                   size="sm"
                 >
