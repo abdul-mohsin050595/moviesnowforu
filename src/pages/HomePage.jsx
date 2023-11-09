@@ -3,8 +3,8 @@ import FeaturedBanner from "../components/FeaturedBanner";
 import MediaContainer from "../components/MediaContainer";
 import configs from "../config/config";
 import api from "../utils/api";
-import Error from "../components/Error";
 import GlobalLoading from "../components/Loading/GlobalLoading";
+import { useErrorBoundary } from "react-error-boundary";
 
 const api_key = import.meta.env.VITE_REACT_API_KEY;
 
@@ -16,7 +16,8 @@ const HomePage = () => {
     topRatedMovies: [],
     topRatedSeries: [],
   });
-  const [error, setError] = useState("");
+  const { showBoundary } = useErrorBoundary();
+
   const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
@@ -63,9 +64,10 @@ const HomePage = () => {
       });
       setLoading(false);
     } catch (error) {
-      console.error("Error fetching data:", error);
-      setError(error.message);
+      // Show error boundary
       setLoading(false);
+      showBoundary(error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -73,9 +75,6 @@ const HomePage = () => {
     fetchData();
   }, []);
 
-  // if (loading) {
-  //   return <GlobalLoading />;
-  // }
   return (
     <>
       {loading && <GlobalLoading />}
@@ -110,7 +109,6 @@ const HomePage = () => {
         mediaData={data?.topRatedSeries}
         mediaType={configs.mediaType.tv}
       />
-      {error && <Error message={error} />}
     </>
   );
 };

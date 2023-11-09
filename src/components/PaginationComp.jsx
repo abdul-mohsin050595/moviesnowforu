@@ -49,7 +49,6 @@ const PaginationComp = ({ page, setPage, pageCount }) => {
       <Pagination size="md">
         <Pagination.Prev disabled={page === 1} onClick={() => prevPage()} />
         {...paginationItems()}
-
         <Pagination.Next
           disabled={page === pageCount}
           onClick={() => nextPage()}
