@@ -4,10 +4,12 @@ function ErrorFallback({ error }) {
   const { resetBoundary } = useErrorBoundary();
 
   return (
-    <div role="alert">
+    <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-dark text-light">
       <p>Something went wrong:</p>
       <pre style={{ color: "red" }}>{error.message}</pre>
-      <button onClick={resetBoundary}>Try again</button>
+      <button onClick={resetBoundary} className="btn btn-light">
+        Try again
+      </button>
     </div>
   );
 }
