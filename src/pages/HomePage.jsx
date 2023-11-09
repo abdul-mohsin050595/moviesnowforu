@@ -18,11 +18,11 @@ const HomePage = () => {
   });
   const { showBoundary } = useErrorBoundary();
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     try {
-      setLoading(true);
+      // setLoading(true);
       const [
         featuredDataResponse,
         popularMoviesResponse,
@@ -55,6 +55,7 @@ const HomePage = () => {
       const topRatedMovies = topRatedMoviesResponse.data.results;
       const topRatedSeries = topRatedSeriesResponse.data.results;
 
+      setLoading(false);
       setData({
         featuredData,
         popularMovies,
@@ -62,7 +63,6 @@ const HomePage = () => {
         topRatedMovies,
         topRatedSeries,
       });
-      setLoading(false);
     } catch (error) {
       // Show error boundary
       setLoading(false);
@@ -84,28 +84,24 @@ const HomePage = () => {
       />
       <MediaContainer
         header="POPULAR MOVIES"
-        // mediaCategory={configs.mediaCategory.popular}
         mediaData={data?.popularMovies}
         mediaType={configs.mediaType.movie}
       />
 
       <MediaContainer
         header="POPULAR SERIES"
-        // mediaCategory={configs.mediaCategory.popular}
         mediaData={data?.popularSeries}
         mediaType={configs.mediaType.tv}
       />
 
       <MediaContainer
         header="TOP RATED MOVIES"
-        // mediaCategory={configs.mediaCategory.top_rated}
         mediaData={data?.topRatedMovies}
         mediaType={configs.mediaType.movie}
       />
 
       <MediaContainer
         header="TOP RATED SERIES"
-        // mediaCategory={configs.mediaCategory.top_rated}
         mediaData={data?.topRatedSeries}
         mediaType={configs.mediaType.tv}
       />
