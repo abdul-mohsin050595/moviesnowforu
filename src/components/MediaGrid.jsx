@@ -7,6 +7,7 @@ import api from "../utils/api";
 import PaginationComp from "./PaginationComp";
 import CardLoading from "./Loading/CardLoading";
 import GlobalLoading from "./Loading/GlobalLoading";
+import { useErrorBoundary } from "react-error-boundary";
 
 const api_key = import.meta.env.VITE_REACT_API_KEY;
 
@@ -16,8 +17,8 @@ const MediaGrid = ({ mediaCategory }) => {
   const [page, setPage] = useState(1);
   const [pageCount, setPageCount] = useState();
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
   const [media, setMedia] = useState([]);
+  const { showBoundary } = useErrorBoundary();
 
   const getMedia = useCallback(async () => {
     setLoading(true);
@@ -31,8 +32,7 @@ const MediaGrid = ({ mediaCategory }) => {
       setPageCount(data.total_pages);
     } catch (error) {
       setLoading(false);
-      setError(error.message);
-      console.log("error", error.message);
+      showBoundary(error);
     }
   }, [mediaType, mediaCategory, page]);
 
@@ -57,7 +57,6 @@ const MediaGrid = ({ mediaCategory }) => {
   return (
     <>
       <Row className="p-4 p-sm-2 flex-row">
-        {error && <span className="text-danger fs-1">{error}</span>}
         {loading && <GlobalLoading />}
         {media.map((med) => {
           return (
@@ -71,7 +70,7 @@ const MediaGrid = ({ mediaCategory }) => {
           );
         })}
       </Row>
-      {!loading && !error && (
+      {!loading && (
         <PaginationComp page={page} setPage={setPage} pageCount={pageCount} />
       )}
     </>

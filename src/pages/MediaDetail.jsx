@@ -5,10 +5,8 @@ import React, { Suspense } from "react";
 const MediaDetail = () => {
   return (
     <>
-      <Suspense fallback="loading....">
-        <MovieDetail />
-        <Trailer />
-      </Suspense>
+      <MovieDetail />
+      <Trailer />
     </>
   );
 };

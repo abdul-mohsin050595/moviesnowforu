@@ -6,7 +6,7 @@ import { Button } from "react-bootstrap";
 import MediaGrid from "../components/MediaGrid";
 import api from "../utils/api";
 import GlobalLoading from "../components/Loading/GlobalLoading";
-import Error from "../components/Error";
+import { useErrorBoundary } from "react-error-boundary";
 
 const api_key = import.meta.env.VITE_REACT_API_KEY;
 const MediaList = () => {
@@ -14,7 +14,7 @@ const MediaList = () => {
   const [mediaCategory, setMediaCategory] = useState("popular");
   const [movies, setMovies] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
+  const { showBoundary } = useErrorBoundary();
 
   const randomMovie = movies && movies[Math.floor(Math.random() * 20)];
 
@@ -32,10 +32,9 @@ const MediaList = () => {
           setLoading(false);
           setMovies(data);
         }
-      } catch (err) {
+      } catch (error) {
         setLoading(false);
-        console.log(err.name);
-        setError(err.message);
+        showBoundary(error);
       }
     };
     fetchMovies();
@@ -46,7 +45,6 @@ const MediaList = () => {
   }
   return (
     <>
-      {error && !movies && <Error message={error} />}
       <FeaturedBanner
         mediaType={mediaType}
         generatedRandomMovie={randomMovie}

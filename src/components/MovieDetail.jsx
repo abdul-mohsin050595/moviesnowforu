@@ -3,35 +3,40 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import configs from "../config/config";
 import GlobalLoading from "./Loading/GlobalLoading";
+import { useErrorBoundary } from "react-error-boundary";
 
 const ACCESS_TOKEN = import.meta.env.VITE_REACT_ACCESS_TOKEN;
 
 function MovieDetail() {
   const { mediaType, mediaId } = useParams();
   const [movie, setMovie] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const { showBoundary } = useErrorBoundary();
 
   useEffect(() => {
     const getDetail = async () => {
-      setLoading(true);
-      const config = {
-        headers: {
-          accept: "application/json",
-          Authorization: `Bearer ${ACCESS_TOKEN}`,
-        },
-      };
-      const res = await axios.get(
-        `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`,
-        config
-      );
+      try {
+        const config = {
+          headers: {
+            accept: "application/json",
+            Authorization: `Bearer ${ACCESS_TOKEN}`,
+          },
+        };
+        const res = await axios.get(
+          `https://api.themoviedb.org/3/${mediaType}/${mediaId}?language=en-US`,
+          config
+        );
 
-      const result = await res.data;
+        const result = await res.data;
 
-      if (res.status === 200) {
+        if (res.status === 200) {
+          setLoading(false);
+          setMovie(result);
+        }
+      } catch (error) {
         setLoading(false);
-        setMovie(result);
+        showBoundary(error);
       }
-      console.log(result);
     };
     getDetail();
   }, [mediaType, mediaId]);
