@@ -27,7 +27,7 @@ const MediaSearch = () => {
         if (res.status === 200) {
           setLoading(false);
           setMedia(data.results);
-          setPageCount(data.total_pages);
+          setPageCount(data.total_pages <= 500 ? data.total_pages : 500);
         }
       } catch (error) {
         setLoading(false);

@@ -29,7 +29,7 @@ const MediaGrid = ({ mediaCategory }) => {
       const data = res.data;
       setLoading(false);
       setMedia(data.results);
-      setPageCount(data.total_pages);
+      setPageCount(data.total_pages <= 500 ? data.total_pages : 500);
     } catch (error) {
       setLoading(false);
       showBoundary(error);
