@@ -56,25 +56,6 @@ const Trailer = () => {
   return (
     <>
       {loading && <GlobalLoading />}
-      {/* {trailerId && (
-        <Container className="mt-3">
-          <div className="mt-2 mb-2 border-info border-3 border-bottom fs-5 fw-bold d-inline">
-            TRAILER
-          </div>
-          <div style={tarilerStyle}>
-            {trailerId && (
-              <div className="ratio ratio-16x9">
-                <iframe
-                  src={configs.youtubePath(trailerId)}
-                  title="youtube trailer"
-                  allowFullScreen
-                  loading="lazy"
-                ></iframe>
-              </div>
-            )}
-          </div>
-        </Container>
-      )} */}
       <Container className="mt-3">
         <div className="mt-2 mb-2 border-info border-3 border-bottom fs-5 fw-bold d-inline">
           TRAILER
